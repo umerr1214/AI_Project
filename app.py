@@ -4,12 +4,12 @@ import torch
 import torchvision.transforms as transforms
 import os
 
-from model import SimpleCNN  # Make sure this class is defined in model.py
+from model import ImprovedCNN  # Make sure this class is defined in model.py
 
 app = Flask(__name__)
 
 # Load your model
-model = SimpleCNN(num_classes=10)
+model = ImprovedCNN(num_classes=10)
 model.load_state_dict(torch.load('fruit_model.pth', map_location=torch.device('cpu')))
 model.eval()
 

@@ -1,7 +1,7 @@
 
 # 🍓 Fruit Image Classification Web App
 
-This project is a complete pipeline for classifying images of fruits into one of **10 categories** using a **Convolutional Neural Network (CNN)** built with **PyTorch**. A simple **Flask-based web interface** is included to allow users to upload an image and receive the predicted fruit type.
+This project is a complete pipeline for classifying images of fruits into one of **10 categories** using a **Convolutional Neural Network (CNN)** built with **PyTorch**.It includes a visually appealing **Flask-based web interface** where users can upload an image and receive the predicted fruit type.
 
 ---
 
@@ -24,11 +24,27 @@ This project is a complete pipeline for classifying images of fruits into one of
 
 ---
 
+### 🔧 Architecture Details:
+
+We've upgraded the model from a basic CNN to a more powerful custom-designed **ImprovedCNN** architecture.
+
+- **3 Convolutional Layers** with increasing filters: 32 → 64 → 128
+- Each followed by **Batch Normalization**, **ReLU**, and **MaxPooling**
+- **Dropout layers** added for regularization to prevent overfitting
+- Two **Fully Connected (Dense)** layers:
+  - First FC layer: `128 * 16 * 16 → 256`
+  - Output FC layer: `256 → 10 (classes)`
+- Trained with **CrossEntropyLoss** and **Adam optimizer**
+
+This architecture achieves significantly better accuracy and generalization on the test set compared to the original model.
+
+---
+
 ## 🖥️ Web Interface
 
 - Created using **Flask**
-- Users can upload an image via browser
-- The app predicts the fruit class and displays it
+- Users can upload an image from the browser
+- Predicted fruit class is displayed after image upload
 
 ---
 
@@ -66,8 +82,13 @@ Then open your browser at: [http://127.0.0.1:5000](http://127.0.0.1:5000)
 ## 🏗️ Model Training Summary
 
 - Images resized to 128x128
-- Normalized using `[0.5, 0.5, 0.5]` mean and std
-- CNN trained and saved using:
+- Normalized using [0.5, 0.5, 0.5] for mean and std
+- Trained with:
+- Optimizer: Adam
+- Loss Function: CrossEntropyLoss
+- Epochs: typically 10–20 for convergence
+
+- Model saved via:
 
 ```python
 torch.save(model.state_dict(), 'fruit_model.pth')
@@ -77,25 +98,10 @@ torch.save(model.state_dict(), 'fruit_model.pth')
 
 ## 🖼️ Prediction Pipeline
 
-1. User uploads image
-2. Flask receives and preprocesses the image
-3. Model predicts the class
-4. Prediction is returned and shown on the web page
-
----
-
-## ✅ Future Improvements
-
-- Add confidence scores
-- Use more complex models (e.g., ResNet)
-- Deploy on Render, Hugging Face Spaces, or Streamlit
-- Add image preview and drag-and-drop UI
-
----
-
-## 📸 Screenshot
-
-![Web App Preview](screenshot.png)
+1. User uploads image via browser
+2. Flask handles and transforms the image
+3. ImprovedCNN predicts the fruit class
+4. Prediction displayed dynamically on the web page
 
 ---
 

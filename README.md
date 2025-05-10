@@ -21,6 +21,7 @@ This project is a complete pipeline for classifying images of fruits into one of
   - 2 fully connected layers
 - Built using `torch.nn.Module`
 - Trained on the fruit dataset using basic transformations and normalization
+- **not being used now**
 
 ---
 

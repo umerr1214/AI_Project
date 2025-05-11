@@ -1,19 +1,26 @@
 import torch.nn as nn
 import torchvision.models as models
 
+
+# Loads a **ResNet18 model pre-trained on ImageNet**, a huge dataset 
+# with 1,000 classes (e.g., cats, dogs, airplanes).
+# This gives you a model that has already **learned useful features**, 
+# like detecting edges, textures, and object parts — so we don’t need 
+# to start from scratch.
+
 def get_resnet18_model(num_classes, freeze_backbone=True):
     # Load pre-trained ResNet18 model
     model = models.resnet18(pretrained=True)
 
-    # Optionally freeze all layers except final classifier
+    # freeze all layers except final layer
     if freeze_backbone:
         for param in model.parameters():
-            param.requires_grad = False
+            param.requires_grad = False # tells PyTorch not to update the weights because the early layers are general feature detectors and we need those
 
     # Replace the final fully connected layer with custom classifier
     model.fc = nn.Sequential(
-        nn.Linear(model.fc.in_features, 256),
-        nn.ReLU(),
+        nn.Linear(model.fc.in_features, 256),   #reducing features to 256
+        nn.ReLU(),  #adds non-linearity
         nn.Dropout(0.4),
         nn.Linear(256, num_classes)
     )
